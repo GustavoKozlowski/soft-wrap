@@ -1,11 +1,18 @@
 import React from "react";
-import { Table } from "react-bootstrap";
+import { Table, ButtonGroup, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useState } from 'react';
 
 export default function Tabela({ pessoas }) {
+
   return (
     <>
       <h1>Tabela de Dados</h1>
+     <div>
+      <Button>
+        Adicionar Cadastro
+      </Button>
+     </div>
       <Table striped bordered hover variant="primary">
         <thead>
           <tr>
@@ -29,7 +36,12 @@ export default function Tabela({ pessoas }) {
               <td>{pessoa.cpf}</td>
               <td>{pessoa.cidade}</td>
               <td>{pessoa.estado}</td>
-              <td></td>
+              <td>
+                <ButtonGroup size="sm">
+                  <Button variant="outline-success">Atualizar</Button>
+                  <Button variant="outline-danger">Remover</Button>
+                </ButtonGroup>
+              </td>
             </tr>
           ))}
         </tbody>
