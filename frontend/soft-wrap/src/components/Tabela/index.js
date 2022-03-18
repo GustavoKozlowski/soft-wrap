@@ -1,18 +1,34 @@
 import React from "react";
-import { Table, ButtonGroup, Button } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { useState } from 'react';
+import { useEffect, useState } from "react";
+import { Table, ButtonGroup, Button, Modal } from "react-bootstrap";
+import AddForm from "../AddForm";
+import { db } from "../../firebase.config";
+import {
+  collection,
+  getDocs,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  doc,
+} from "firebase/firestore";
 
 export default function Tabela({ pessoas }) {
+  const [users, setUsers] = useState([]);
+
+  const usersCollectionRef = collection(db, "teste");
+
+  useEffect(() => {
+    const getUsers = async () => {
+      const data = await getDocs(usersCollectionRef);
+      setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      console.log(data);
+    };
+    getUsers();
+  }, []);
 
   return (
     <>
       <h1>Tabela de Dados</h1>
-     <div>
-      <Button>
-        Adicionar Cadastro
-      </Button>
-     </div>
       <Table striped bordered hover variant="primary">
         <thead>
           <tr>
@@ -45,7 +61,22 @@ export default function Tabela({ pessoas }) {
             </tr>
           ))}
         </tbody>
+      
       </Table>
+      
+      <Modal>
+        <Modal.Header>
+          <Modal.Title>Cadastro</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <AddForm />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary">
+            Fechar
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 }

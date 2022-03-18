@@ -1,5 +1,5 @@
 import Tabela from "./components/Tabela";
-
+import AddForm from "./components/AddForm";
 export default function App() {
   const dados = [
     {
@@ -28,11 +28,12 @@ export default function App() {
       cpf: "158.457.896-50",
       cidade: "L.A",
       estado: "Califónia",
-    },
+    }
   ];
   return (
     <>
       <Tabela pessoas={dados} />
+    
     </>
   );
 }
